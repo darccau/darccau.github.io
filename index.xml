@@ -7,15 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-GB</language>
     <copyright>&lt;a href=&#39;https://creativecommons.org/licenses/by/4.0/&#39; target=&#39;_blank&#39;&gt;CC-BY 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Mon, 10 Aug 2020 20:03:02 -0300</lastBuildDate><atom:link href="https://darccau.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Jul 2021 20:03:02 -0300</lastBuildDate><atom:link href="https://darccau.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>About</title>
-      <link>https://darccau.github.io/about/</link>
-      <pubDate>Fri, 18 Jun 2021 23:39:39 -0300</pubDate>
+      <title>Why use an terminal based workflow?</title>
+      <link>https://darccau.github.io/why-use-an-terminal-based-workflow/</link>
+      <pubDate>Wed, 07 Jul 2021 20:03:02 -0300</pubDate>
       
-      <guid>https://darccau.github.io/about/</guid>
-      <description>Yo, I&amp;rsquo;m Eduardo Paixão, also known as &amp;ldquo;Darccau&amp;rdquo;. I am currently an IT student at Universidade Federal do Rio Grande do Norte, focusing on cyber security and computer networks.
-I am also formed as a network technician, this allowed me to work with network infrastructure at SINFO performing network management tasks. I currently work at the same company, but now at the Security Incident Response and Treatment Center where I perform offensive security tests, and task automaion.</description>
+      <guid>https://darccau.github.io/why-use-an-terminal-based-workflow/</guid>
+      <description>Introduction My friends frequently asking me &amp;ldquo;why you use terminal as a place to development ?&amp;rdquo; this question motivate me to write about so many peaple prefer works on terminal than in a graphical user interface(GUI).
+Extensibility At the Beginning, we need to remenber the linux philosophy of extensibility. Once we are using an command line interface(CLI) tool on linux, we can integrate them with another allowing an developer create an intrincated chain of commands to perform an actions and also can create another chain of commands to filer the first one output.</description>
     </item>
     
     <item>
@@ -27,6 +27,16 @@ I am also formed as a network technician, this allowed me to work with network i
       <description>Introduction Briefly, the buffer overflow is a vulnerability that occurs when a program writes more data than its buffer supports. And the data that exceeds the buffer size overwrite the program information.
 For explain this vulnerability, i was prepered this vulnerable C code as you can see below.
 #include &amp;lt;stdio.h&amp;gt; void vuln(void) { char name[30]; puts(&amp;#34;Whats my name? &amp;#34;); scanf(&amp;#34;%s&amp;#34;, name); printf(&amp;#34;You say: %s\nBut it is not my real name!&amp;#34;, name); } void real_name() { puts(&amp;#34;You are right, my name is Eduardo&amp;#34;); } int main(void) { vuln(); return 0; } Now we need to compile this program, some flags will be used to disable some file protections:</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://darccau.github.io/about/</link>
+      <pubDate>Fri, 12 Jun 2020 21:05:41 -0300</pubDate>
+      
+      <guid>https://darccau.github.io/about/</guid>
+      <description>Yo, I&amp;rsquo;m Eduardo Paixão, also known as &amp;ldquo;darccau&amp;rdquo;. I am currently an IT student at Universidade Federal do Rio Grande do Norte, focusing on cyber security and computer networks.
+I am also formed as a network technician, this allowed me to work with network infrastructure at STI performing N1 support and solving network tasks. I currently work at the same company, but now at the Security Incident Response and Treatment Center where I perform offensive security tests, infraestructure impruvement and creating tools.</description>
     </item>
     
   </channel>
