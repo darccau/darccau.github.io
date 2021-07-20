@@ -37,12 +37,12 @@ window in multiple little terminals allowing one better visualization of
 multiple tasks beeing performed at the same time.</p>
 <p>In my opinion, the gretest example of it is the tmux that until divide de
 terminal in sessions, panes and sessions as show bellow:</p>
-<p><img src="~/Pictures/logo.jpg" alt="tmux split screen">
-It' split terminal window, allow multiple terminal in the same window.</p>
-<p><img src="~/Pictures/tmux_sessions.png" alt="tmux panes">
-Create new terminal window outside of the first one.</p>
-<p><img src="~/Pictures/tmux_sessions.png" alt="tmux sessions">
-Create sessions that comport the panes and splits above mentioned.</p>
+<!-- raw HTML omitted -->
+<p>It' split terminal window, allow multiple terminal in the same window.</p>
+<!-- raw HTML omitted -->
+<p>Create new terminal window outside of the first one.</p>
+<!-- raw HTML omitted -->
+<p>Create sessions that comport the panes and splits above mentioned.</p>
 <h2 id="text-edition">Text edition</h2>
 <p>The terminal text editor are editors that work in it&rsquo;s own terminal, this
 editors are frequently used because they are weightless, had universal presence
