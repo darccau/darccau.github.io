@@ -7,17 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-GB</language>
     <copyright>&lt;a href=&#39;https://creativecommons.org/licenses/by/4.0/&#39; target=&#39;_blank&#39;&gt;CC-BY 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Wed, 07 Jul 2021 20:03:02 -0300</lastBuildDate><atom:link href="https://darccau.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Why use an terminal based workflow?</title>
-      <link>https://darccau.github.io/why-use-an-terminal-based-workflow/</link>
-      <pubDate>Wed, 07 Jul 2021 20:03:02 -0300</pubDate>
-      
-      <guid>https://darccau.github.io/why-use-an-terminal-based-workflow/</guid>
-      <description>Introduction My friends frequently asking me &amp;ldquo;why you use terminal as a place to development ?&amp;rdquo; this question motivate me to write about so many peaple prefer works on terminal than in a graphical user interface(GUI).
-Extensibility At the Beginning, we need to remenber the linux philosophy of extensibility. Once we are using an command line interface(CLI) tool on linux, we can integrate them with another allowing an developer create an intrincated chain of commands to perform an actions and also can create another chain of commands to filer the first one output.</description>
-    </item>
-    
+    <lastBuildDate>Mon, 10 Aug 2020 20:03:02 -0300</lastBuildDate><atom:link href="https://darccau.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Buffer Overflow Exploitation</title>
       <link>https://darccau.github.io/buffer-overflow-exploitation/</link>

