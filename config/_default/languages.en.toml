@@ -1,0 +1,30 @@
+languageCode = "en"
+languageName = "English"
+weight = 1
+title = "Paixão"
+
+[params]
+  displayName = "EN"
+  isoCode = "en"
+  rtl = false
+  dateFormat = "2 January 2006"
+  logo = "img/logo.png"
+  secondaryLogo = "img/secondary-logo.png"
+  description = "My awesome website"
+  copyright = "© 2024 Paixão. All Rights Reserved"
+
+[author]
+  name = "Paixão"
+  image = "img/blowfish_logo.png"
+  headline = "I write things, I break things and I write things that break things"
+  bio = "A little bit about you"
+  links = [
+      { email = "mailto:darccau@gmail.com" },
+      # { link = "https://link-to-some-website.com/" },
+      { github = "https://github.com/darccau" },
+      # { instagram = "https://www.instagram.com/darccau/" },
+      { linkedin = "https://linkedin.com/in/darccau" },
+      # { reddit = "https://reddit.com/user/username" },
+      # { telegram = "https://t.me/username" },
+      # { x-twitter = "https://twitter.com/darccau" },
+   ]
