@@ -1,0 +1,89 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  subtitle: string;
+  meta?: string;
+  metaPill?: string;
+  metaMono?: boolean;
+  img?: string;
+  imgSize?: 32 | 36;
+  monogram?: string;
+  tile?: 'circle' | 'square' | 'none';
+  last?: boolean;
+}
+
+const {
+  href,
+  title,
+  subtitle,
+  meta,
+  metaPill,
+  metaMono = true,
+  img,
+  imgSize = 36,
+  monogram,
+  tile = 'circle',
+  last = false,
+} = Astro.props;
+
+const tileClass =
+  tile === 'none'
+    ? ''
+    : `bg-neutral-100 dark:bg-neutral-800 ${
+        tile === 'circle' ? 'rounded-full' : 'rounded-[10px]'
+      } shadow-shorter overflow-hidden`;
+---
+
+<a
+  class="flex gap-x-4 px-4 -mx-4 pt-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group"
+  href={href}
+>
+  <div class:list={['w-[36px] h-[36px] mt-[2px] flex-shrink-0', tileClass]}>
+    <div class="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">
+      {
+        img && (
+          <img
+            src={img}
+            alt={`${title} logo`}
+            loading="lazy"
+            width={imgSize}
+            height={imgSize}
+            class:list={[`w-[${imgSize}px] h-[${imgSize}px]`]}
+          />
+        )
+      }
+      {monogram && <span>{monogram}</span>}
+    </div>
+  </div>
+  <div
+    class:list={[
+      'flex flex-col text-sm flex-auto pb-4 text-neutral-700 group-hover:border-transparent dark:text-neutral-300',
+      last ? 'border-transparent' : 'border-b border-neutral-100 dark:border-neutral-900',
+    ]}
+  >
+    <div>{title}</div>
+    <div class="text-neutral-500 dark:text-neutral-500 flex justify-between gap-x-2 items-center">
+      <div>{subtitle}</div>
+      {
+        meta && (
+          <div
+            class:list={[
+              'text-neutral-400 dark:text-neutral-500 tabular-nums',
+              metaMono && 'font-mono',
+            ]}
+          >
+            {meta}&nbsp;
+          </div>
+        )
+      }
+      {
+        metaPill && (
+          <div class="bg-neutral-100 border border-black border-opacity-5 px-2 text-xs rounded-full dark:bg-neutral-800 dark:text-neutral-500">
+            {metaPill}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</a>
