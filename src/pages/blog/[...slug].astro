@@ -1,0 +1,75 @@
+---
+import '@fontsource-variable/inter';
+import '../../styles/global.css';
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('blog');
+  return posts
+    .filter((post) => !post.data.draft)
+    .map((post) => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const date = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{post.data.title} — Eduardo Paixão</title>
+    <meta name="description" content={post.data.description} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon-120.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicon-152.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/favicon-167.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
+  </head>
+  <body class="bg-white dark:bg-neutral-950">
+    <div class="mx-auto">
+      <article class="md:max-w-[460px] m-6 md:m-20 text-neutral-700 dark:text-neutral-300">
+        <div class="flex gap-x-4">
+          <div class="flex flex-col">
+            <div class="w-[36px] h-[36px] mb-8 mt-10 bg-neutral-100 dark:bg-neutral-800 rounded-full shadow-shorter overflow-hidden">
+              <a href="/" aria-label="Home" class="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full border-none">
+                ep
+              </a>
+            </div>
+            <h1 class="mt-[6px] font-semibold leading-tight">{post.data.title}</h1>
+            <div class="text-sm text-neutral-500 dark:text-neutral-400 mt-3">
+              <time datetime={post.data.pubDate.toISOString()}>{date.format(post.data.pubDate)}</time>
+              {
+                post.data.updatedDate && (
+                  <span class="text-neutral-400 dark:text-neutral-500">
+                    &nbsp;· updated {date.format(post.data.updatedDate)}
+                  </span>
+                )
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="prose mt-10">
+          <Content />
+        </div>
+
+        <div class="text-sm text-neutral-400 mt-12">
+          <a href="/blog" class="hover:text-neutral-600 dark:hover:text-neutral-200">← all posts</a>
+        </div>
+
+        <h3 class="mt-20 mb-40 text-sm text-neutral-400 lowercase">© 2026 Eduardo Paixão.</h3>
+      </article>
+    </div>
+  </body>
+</html>

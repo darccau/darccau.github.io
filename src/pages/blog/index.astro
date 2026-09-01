@@ -1,0 +1,93 @@
+---
+import '@fontsource-variable/inter';
+import '../../styles/global.css';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const date = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Blog — Eduardo Paixão</title>
+    <meta name="description" content="Writing on application security, tooling, and communities." />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon-120.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/favicon-152.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/favicon-167.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
+  </head>
+  <body class="bg-white dark:bg-neutral-950">
+    <div class="mx-auto">
+      <div class="md:max-w-[460px] m-6 md:m-20 text-neutral-700 dark:text-neutral-300">
+        <div class="flex gap-x-4">
+          <div class="flex flex-col lowercase">
+            <div class="w-[36px] h-[36px] mb-8 mt-10 bg-neutral-100 dark:bg-neutral-800 rounded-full shadow-shorter overflow-hidden">
+              <a href="/" aria-label="Home" class="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full border-none">
+                ep
+              </a>
+            </div>
+            <h1 class="mt-[6px]"><span class="font-semibold">Blog</span></h1>
+            <p class="leading-[25px] mt-4 text-neutral-500 dark:text-neutral-400 w-11/12">
+              Writing on application security, tooling, and the communities I'm part of.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-8">
+          {
+            posts.length > 0 ? (
+              <ul>
+                {
+                  posts.map((post, i) => (
+                    <li>
+                      <a
+                        href={`/blog/${post.id}`}
+                        class:list={[
+                          'flex flex-col py-4 -mx-4 px-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group',
+                          i !== posts.length - 1 &&
+                            'border-b border-neutral-100 dark:border-neutral-900',
+                        ]}
+                      >
+                        <div class="text-sm font-semibold">{post.data.title}</div>
+                        <div class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-[25px]">
+                          {post.data.description}
+                        </div>
+                        <time
+                          datetime={post.data.pubDate.toISOString()}
+                          class="text-xs mt-2 text-neutral-400 dark:text-neutral-500"
+                        >
+                          {date.format(post.data.pubDate)}
+                        </time>
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            ) : (
+              <p class="text-sm text-neutral-400 lowercase">nothing here yet.</p>
+            )
+          }
+        </div>
+
+        <div class="text-sm text-neutral-400 mt-8 mb-4">
+          <a href="/" class="hover:text-neutral-600 dark:hover:text-neutral-200">← back home</a>
+        </div>
+
+        <h3 class="mt-20 mb-40 text-sm text-neutral-400 lowercase">© 2026 Eduardo Paixão.</h3>
+      </div>
+    </div>
+  </body>
+</html>
