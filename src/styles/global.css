@@ -128,6 +128,10 @@ body {
   flex-shrink: 0;
 }
 
+.min-w-0 {
+  min-width: 0;
+}
+
 /* Gap */
 .gap-x-2 {
   column-gap: 0.5rem;
@@ -222,6 +226,11 @@ body {
   padding-bottom: 1rem;
 }
 
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
 /* Sizing */
 .w-11\/12 {
   width: 91.666667%;
@@ -241,6 +250,10 @@ body {
 
 .w-\[36px\] {
   width: 36px;
+}
+
+.w-\[96px\] {
+  width: 96px;
 }
 
 .h-\[8px\] {
@@ -285,6 +298,10 @@ body {
 
 .leading-\[25px\] {
   line-height: 25px;
+}
+
+.leading-snug {
+  line-height: 1.375;
 }
 
 .lowercase {

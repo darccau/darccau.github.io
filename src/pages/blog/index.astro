@@ -46,31 +46,29 @@ const date = new Intl.DateTimeFormat('en-US', {
           </div>
         </div>
 
-        <div class="mt-8">
+        <div class="mt-10">
           {
             posts.length > 0 ? (
               <ul>
                 {
-                  posts.map((post, i) => (
+                  posts.map((post) => (
                     <li>
                       <a
                         href={`/blog/${post.id}`}
-                        class:list={[
-                          'flex flex-col py-4 -mx-4 px-4 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900 group',
-                          i !== posts.length - 1 &&
-                            'border-b border-neutral-100 dark:border-neutral-900',
-                        ]}
+                        class="flex gap-x-4 px-4 -mx-4 py-5 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900"
                       >
-                        <div class="text-sm font-semibold">{post.data.title}</div>
-                        <div class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-[25px]">
-                          {post.data.description}
-                        </div>
                         <time
                           datetime={post.data.pubDate.toISOString()}
-                          class="text-xs mt-2 text-neutral-400 dark:text-neutral-500"
+                          class="w-[96px] flex-shrink-0 font-mono text-xs text-neutral-400 dark:text-neutral-500 tabular-nums mt-[2px]"
                         >
                           {date.format(post.data.pubDate)}
                         </time>
+                        <div class="flex-auto min-w-0">
+                          <div class="text-sm font-semibold leading-snug">{post.data.title}</div>
+                          <div class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-[25px]">
+                            {post.data.description}
+                          </div>
+                        </div>
                       </a>
                     </li>
                   ))
@@ -82,7 +80,7 @@ const date = new Intl.DateTimeFormat('en-US', {
           }
         </div>
 
-        <div class="text-sm text-neutral-400 mt-8 mb-4">
+        <div class="text-sm text-neutral-400 mt-12">
           <a href="/" class="hover:text-neutral-600 dark:hover:text-neutral-200">← back home</a>
         </div>
 
