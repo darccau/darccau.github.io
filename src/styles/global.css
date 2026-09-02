@@ -112,6 +112,10 @@ body {
   align-items: center;
 }
 
+.items-baseline {
+  align-items: baseline;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -130,6 +134,10 @@ body {
 
 .min-w-0 {
   min-width: 0;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
 }
 
 /* Gap */
@@ -250,10 +258,6 @@ body {
 
 .w-\[36px\] {
   width: 36px;
-}
-
-.w-\[96px\] {
-  width: 96px;
 }
 
 .h-\[8px\] {

@@ -55,19 +55,19 @@ const date = new Intl.DateTimeFormat('en-US', {
                     <li>
                       <a
                         href={`/blog/${post.id}`}
-                        class="flex gap-x-4 px-4 -mx-4 py-5 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900"
+                        class="flex flex-col px-4 -mx-4 py-5 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900"
                       >
-                        <time
-                          datetime={post.data.pubDate.toISOString()}
-                          class="w-[96px] flex-shrink-0 font-mono text-xs text-neutral-400 dark:text-neutral-500 tabular-nums mt-[2px]"
-                        >
-                          {date.format(post.data.pubDate)}
-                        </time>
-                        <div class="flex-auto min-w-0">
-                          <div class="text-sm font-semibold leading-snug">{post.data.title}</div>
-                          <div class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-[25px]">
-                            {post.data.description}
-                          </div>
+                        <div class="flex items-baseline justify-between gap-x-4">
+                          <div class="text-sm font-semibold leading-snug min-w-0">{post.data.title}</div>
+                          <time
+                            datetime={post.data.pubDate.toISOString()}
+                            class="text-xs text-neutral-400 dark:text-neutral-500 tabular-nums whitespace-nowrap flex-shrink-0"
+                          >
+                            {date.format(post.data.pubDate)}
+                          </time>
+                        </div>
+                        <div class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-[25px]">
+                          {post.data.description}
                         </div>
                       </a>
                     </li>
