@@ -2,6 +2,7 @@
 import '@fontsource-variable/inter';
 import '../../styles/global.css';
 import { getCollection } from 'astro:content';
+import { ClientRouter } from 'astro:transitions';
 
 const posts = (await getCollection('blog'))
   .filter((post) => !post.data.draft)
@@ -28,10 +29,11 @@ const date = new Intl.DateTimeFormat('en-US', {
     <link rel="apple-touch-icon" sizes="152x152" href="/favicon-152.png" />
     <link rel="apple-touch-icon" sizes="167x167" href="/favicon-167.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png" />
+    <ClientRouter />
   </head>
   <body class="bg-white dark:bg-neutral-950">
     <div class="mx-auto">
-      <div class="md:max-w-[460px] m-6 md:m-20 text-neutral-700 dark:text-neutral-300">
+      <div class="transition-element md:max-w-[460px] m-6 md:m-20 text-neutral-700 dark:text-neutral-300">
         <div class="flex gap-x-4">
           <div class="flex flex-col lowercase">
             <div class="w-[36px] h-[36px] mb-8 mt-10 bg-neutral-100 dark:bg-neutral-800 rounded-full shadow-shorter overflow-hidden">

@@ -39,6 +39,13 @@ a {
   border-bottom: 1px solid #ccc;
 }
 
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+}
+
 b,
 strong {
   font-weight: bolder;
@@ -591,6 +598,226 @@ body {
 
   .prose hr {
     border-top-color: #262626;
+  }
+}
+
+/* Page transitions — copied from gelzin.com */
+.transition-element {
+  view-transition-name: lee;
+}
+
+::view-transition-old(lee) {
+  animation: 0.8s ease-in-out fade-out;
+}
+
+::view-transition-new(lee) {
+  animation: 0.4s ease-in-out fade-in-up;
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) translate(-0.2px);
+  }
+  20% {
+    opacity: 0.5;
+    transform: translateY(24px) translate(-0.2px);
+  }
+  80% {
+    opacity: 0.7;
+    transform: translateY(0) translate(-0.2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translate(-0.2px);
+  }
+}
+
+::view-transition-old(root) {
+  animation-duration: 0.3s;
+  animation-name: fade-out;
+}
+
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+  animation-name: fade-in;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(*) {
+    animation-duration: 0.3s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Icon copy actions */
+.icon-btn {
+  position: relative;
+}
+
+.icon-base {
+  display: block;
+}
+
+/* Value box shown on hover of copyable icons */
+.value-box {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  translate: -50% 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  max-width: min(80vw, 280px);
+  padding: 6px 8px 6px 9px;
+  border: 1px solid #ececec;
+  border-radius: 9px;
+  background-color: #ffffff;
+  color: #404040;
+  font-size: 11px;
+  line-height: 1.45;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: opacity 0.15s ease, translate 0.15s ease,
+    border-color 0.15s ease, color 0.15s ease;
+  z-index: 10;
+}
+
+.value-box--right {
+  left: auto;
+  right: 0;
+  translate: 0 4px;
+}
+
+/* invisible bridge so the pointer can travel from the icon into the box */
+.value-box::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 10px;
+}
+
+.icon-btn:hover .value-box,
+.icon-btn:focus-visible .value-box,
+.icon-btn.is-copied .value-box {
+  opacity: 1;
+  translate: 0 0;
+  pointer-events: auto;
+}
+
+.icon-btn.is-copied .value-box {
+  color: #16a34a;
+  border-color: #16a34a;
+}
+
+.value-copy {
+  display: inline-flex;
+  align-items: center;
+  color: #a3a3a3;
+  transition: color 0.15s ease;
+}
+
+.value-copy svg {
+  display: block;
+  width: 13px;
+  height: 13px;
+}
+
+.value-copy .i-check {
+  display: none;
+}
+
+.icon-btn.is-copied .value-copy {
+  color: #16a34a;
+}
+
+.icon-btn.is-copied .value-copy .i-copy {
+  display: none;
+}
+
+.icon-btn.is-copied .value-copy .i-check {
+  display: block;
+}
+
+.value-key {
+  display: block;
+  height: 45px;
+  min-width: 0;
+  overflow: hidden;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #737373;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+
+.value-key-inner {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.icon-btn:hover .value-key-inner,
+.icon-btn:focus-visible .value-key-inner,
+.icon-btn.is-copied .value-key-inner {
+  transform: translateY(calc(-100% + 45px));
+  transition: transform 20s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-btn:hover .value-key-inner,
+  .icon-btn:focus-visible .value-key-inner,
+  .icon-btn.is-copied .value-key-inner {
+    transform: translateY(0);
+    transition: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .value-box {
+    background-color: #171717;
+    color: #d4d4d4;
+    border-color: #262626;
+  }
+
+  .icon-btn.is-copied .value-box {
+    color: #4ade80;
+    border-color: #4ade80;
+  }
+
+  .value-copy {
+    color: #737373;
+  }
+
+  .icon-btn.is-copied .value-copy {
+    color: #4ade80;
   }
 }
 
