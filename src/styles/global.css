@@ -733,33 +733,67 @@ body {
   border-color: #16a34a;
 }
 
-.value-copy {
-  display: inline-flex;
-  align-items: center;
-  color: #a3a3a3;
-  transition: color 0.15s ease;
+/* The whole button copies, so signal it with the copy cursor */
+.icon-btn[data-copy],
+.icon-btn[data-copy-from] {
+  cursor: copy;
 }
 
-.value-copy svg {
-  display: block;
-  width: 13px;
-  height: 13px;
-}
-
-.value-copy .i-check {
+/* Main icon swaps to a copy icon on hover, then a check after copying */
+.icon-base .i-copy,
+.icon-base .i-check {
   display: none;
+  width: 18px;
+  height: 18px;
 }
 
-.icon-btn.is-copied .value-copy {
+.icon-base .i-check {
   color: #16a34a;
 }
 
-.icon-btn.is-copied .value-copy .i-copy {
+.icon-btn:hover .icon-base .i-default,
+.icon-btn:focus-visible .icon-base .i-default,
+.icon-btn.is-copied .icon-base .i-default {
   display: none;
 }
 
-.icon-btn.is-copied .value-copy .i-check {
+.icon-btn:hover .icon-base .i-copy,
+.icon-btn:focus-visible .icon-base .i-copy {
   display: block;
+}
+
+.icon-btn.is-copied .icon-base .i-copy {
+  display: none;
+}
+
+.icon-btn.is-copied .icon-base .i-check {
+  display: block;
+}
+
+/* Toast confirmation */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  translate: -50% 8px;
+  max-width: 90vw;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background-color: #171717;
+  color: #fafafa;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, translate 0.2s ease;
+  z-index: 50;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  translate: -50% 0;
 }
 
 .value-key {
@@ -812,12 +846,13 @@ body {
     border-color: #4ade80;
   }
 
-  .value-copy {
-    color: #737373;
+  .icon-base .i-check {
+    color: #4ade80;
   }
 
-  .icon-btn.is-copied .value-copy {
-    color: #4ade80;
+  .toast {
+    background-color: #fafafa;
+    color: #171717;
   }
 }
 
