@@ -606,12 +606,33 @@ body {
   view-transition-name: lee;
 }
 
+/* Shared chrome stays put while the middle content transitions */
+.view-transition-avatar {
+  view-transition-name: avatar;
+}
+
+.view-transition-footer {
+  view-transition-name: footer;
+}
+
+::view-transition-group(avatar),
+::view-transition-group(footer) {
+  animation: none;
+}
+
+::view-transition-old(avatar),
+::view-transition-new(avatar),
+::view-transition-old(footer),
+::view-transition-new(footer) {
+  animation: none;
+}
+
 ::view-transition-old(lee) {
   animation: 0.8s ease-in-out fade-out;
 }
 
 ::view-transition-new(lee) {
-  animation: 0.4s ease-in-out fade-in-up;
+  animation: 0.4s ease-in-out fade-in-side;
 }
 
 @keyframes fade-out {
@@ -632,22 +653,22 @@ body {
   }
 }
 
-@keyframes fade-in-up {
+@keyframes fade-in-side {
   0% {
     opacity: 0;
-    transform: translateY(24px) translate(-0.2px);
+    transform: translateX(24px) translateY(-0.2px);
   }
   20% {
     opacity: 0.5;
-    transform: translateY(24px) translate(-0.2px);
+    transform: translateX(24px) translateY(-0.2px);
   }
   80% {
     opacity: 0.7;
-    transform: translateY(0) translate(-0.2px);
+    transform: translateX(0) translateY(-0.2px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) translate(-0.2px);
+    transform: translateX(0) translateY(-0.2px);
   }
 }
 

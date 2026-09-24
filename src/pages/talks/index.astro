@@ -4,14 +4,13 @@ import '../../styles/global.css';
 import { getCollection } from 'astro:content';
 import { ClientRouter } from 'astro:transitions';
 
-const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const talks = (await getCollection('talks'))
+  .filter((talk) => !talk.data.draft)
+  .sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
 
 const date = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'short',
-  day: 'numeric',
   timeZone: 'UTC',
 });
 ---
@@ -21,8 +20,8 @@ const date = new Intl.DateTimeFormat('en-US', {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Blog — darccau</title>
-    <meta name="description" content="Writing on application security, tooling, and communities." />
+    <title>Talks — darccau</title>
+    <meta name="description" content="Talks and presentations on application security, tooling, and communities." />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any" />
     <link rel="apple-touch-icon" sizes="120x120" href="/favicon-120.png" />
@@ -41,40 +40,49 @@ const date = new Intl.DateTimeFormat('en-US', {
                 ep
               </a>
             </div>
-            <h1 class="mt-[6px]"><span class="font-semibold">Blog</span></h1>
+            <h1 class="mt-[6px]"><span class="font-semibold">Talks</span></h1>
             <p class="leading-[25px] mt-4 text-neutral-500 dark:text-neutral-400 w-11/12">
-              Writing on application security, tooling, and the communities I'm part of.
+              Presentations and workshops on application security, tooling, and the communities I'm part of.
             </p>
           </div>
         </div>
 
         <div class="mt-10">
           {
-            posts.length > 0 ? (
+            talks.length > 0 ? (
               <ul>
-                {
-                  posts.map((post) => (
-                    <li>
-                      <a
-                        href={`/blog/${post.id}`}
-                        class="flex flex-col px-4 -mx-4 py-5 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900"
-                      >
-                        <div class="flex items-baseline justify-between gap-x-4">
-                          <div class="text-sm font-semibold leading-snug min-w-0">{post.data.title}</div>
+                {talks.map((talk) => (
+                  <li>
+                    <a
+                      href={talk.data.url}
+                      class="flex flex-col px-4 -mx-4 py-5 rounded-[12px] border-none hover:bg-neutral-50 dark:hover:bg-neutral-900"
+                    >
+                      <div class="flex items-baseline justify-between gap-x-4">
+                        <div class="text-sm font-semibold leading-snug min-w-0">{talk.data.title}</div>
+                        {talk.data.date && (
                           <time
-                            datetime={post.data.pubDate.toISOString()}
+                            datetime={talk.data.date.toISOString()}
                             class="text-xs text-neutral-400 dark:text-neutral-500 tabular-nums whitespace-nowrap flex-shrink-0"
                           >
-                            {date.format(post.data.pubDate)}
+                            {date.format(talk.data.date)}
                           </time>
+                        )}
+                      </div>
+                      {(talk.data.event || talk.data.location) && (
+                        <div class="text-xs text-neutral-400 dark:text-neutral-500 mt-1 leading-[25px]">
+                          {talk.data.event}
+                          {talk.data.event && talk.data.location && ' · '}
+                          {talk.data.location}
                         </div>
+                      )}
+                      {talk.data.description && (
                         <div class="text-sm text-neutral-500 dark:text-neutral-400 mt-1 leading-[25px]">
-                          {post.data.description}
+                          {talk.data.description}
                         </div>
-                      </a>
-                    </li>
-                  ))
-                }
+                      )}
+                    </a>
+                  </li>
+                ))}
               </ul>
             ) : (
               <p class="text-sm text-neutral-400 lowercase">nothing here yet.</p>

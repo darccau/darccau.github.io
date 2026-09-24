@@ -41,7 +41,7 @@ try {
       <div class="transition-element md:max-w-[460px] m-6 md:m-20 text-neutral-700 dark:text-neutral-300">
         <div class="flex gap-x-4">
           <div class="flex flex-col lowercase">
-            <div class="w-[36px] h-[36px] mb-8 mt-10 bg-neutral-100 dark:bg-neutral-800 rounded-full shadow-shorter overflow-hidden">
+            <div class="view-transition-avatar w-[36px] h-[36px] mb-8 mt-10 bg-neutral-100 dark:bg-neutral-800 rounded-full shadow-shorter overflow-hidden">
               <div class="text-sm text-neutral-400 font-semibold flex justify-center items-center h-full">ep</div>
             </div>
             <h1 class="mt-[6px]"><span class="font-semibold">darccau</span> is an application security engineer.</h1>
@@ -72,8 +72,9 @@ try {
               </a>
               <button type="button" aria-label="Copy email address" data-copy={email} class={socialIcon}>
                 <span class="icon-base">
-                <svg class="i-default h-[18px] w-[18px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="m21,5v-1H3v1H1v14h1v1h20v-1h1V5h-2Zm-11,7v-1h-1v-1h-1v-1h-1v-1h-1v-1h-1v-1h14v1h-1v1h-1v1h-1v1h-1v1h-1v1h-1v1h-1v1h-2v-1h-1Zm-6-5v1h1v1h1v1h1v1h1v1h1v1h1v1h1v1h2v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v-1h1v11H3V7h1Z"></path>
+                <svg class="i-default h-[18px] w-[18px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2.5"/>
+                  <path d="m22 7.5-8.7 5.53a2.4 2.4 0 0 1-2.6 0L2 7.5"/>
                 </svg>
                 <Fragment set:html={copyIcon} />
                 <Fragment set:html={checkIcon} />
@@ -88,9 +89,16 @@ try {
                 </svg>
               </a>
               <a href="/blog" aria-label="Blog" class={socialIcon}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" class="h-[18px] w-[18px]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="h-[18px] w-[18px]">
                   <path d="M10 2v8l3-3 3 3V2"/>
                   <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/>
+                </svg>
+              </a>
+              <a href="/talks" aria-label="Talks" class={socialIcon}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="h-[18px] w-[18px]">
+                  <path d="M2 3h20"/>
+                  <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/>
+                  <path d="m7 21 5-5 5 5"/>
                 </svg>
               </a>
               <button type="button" aria-label="Copy GPG public key" data-copy-from="#gpg-key" class={socialIcon}>
@@ -113,7 +121,7 @@ try {
           </div>
         </div>
 
-        <h3 class="mt-20 mb-40 text-sm text-neutral-400">© 2026 darccau.</h3>
+        <h3 class="view-transition-footer mt-20 mb-40 text-sm text-neutral-400">© 2026 darccau.</h3>
       </div>
     </div>
 
